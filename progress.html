@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FitBuddy - Progress</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f7f4;
+            margin: 0;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            margin-top: 30px;
+            font-size: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            background: #2e7d32;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #256428;
+        }
+
+        .progress-card,
+        .feedback-card {
+            background: #f8faf9;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 12px;
+            border-left: 5px solid #2e7d32;
+        }
+
+        .progress-card p,
+        .feedback-card p {
+            margin: 7px 0;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #2e7d32;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📈 Track Your Progress</h1>
+
+        <h2>🏃 Save Progress</h2>
+
+        <form action="/progress" method="post">
+
+            <label>Your Name:</label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                required
+            >
+
+            <label>Activity:</label>
+
+            <input
+                type="text"
+                name="activity"
+                placeholder="Example: Walking"
+                required
+            >
+
+            <label>Completed:</label>
+
+            <select name="completed" required>
+                <option value="1">Yes ✅</option>
+                <option value="0">No ❌</option>
+            </select>
+
+            <label>Notes:</label>
+
+            <textarea
+                name="notes"
+                placeholder="How did the activity feel?"
+            ></textarea>
+
+            <button type="submit">
+                Save Progress 📈
+            </button>
+
+        </form>
+
+
+        <h2>💬 Give Feedback</h2>
+
+        <form action="/feedback" method="post">
+
+            <label>Your Name:</label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                required
+            >
+
+            <label>Your Feedback:</label>
+
+            <textarea
+                name="feedback"
+                placeholder="How can FitBuddy improve?"
+                required
+            ></textarea>
+
+            <button type="submit">
+                Submit Feedback 💬
+            </button>
+
+        </form>
+
+
+        <h2>📊 Progress History</h2>
+
+        {% if progress_data %}
+
+            {% for item in progress_data %}
+
+                <div class="progress-card">
+
+                    <p>
+                        <strong>Name:</strong>
+                        {{ item[0] }}
+                    </p>
+
+                    <p>
+                        <strong>Activity:</strong>
+                        {{ item[1] }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+
+                        {% if item[2] == 1 %}
+                            Completed ✅
+                        {% else %}
+                            Not Completed ❌
+                        {% endif %}
+                    </p>
+
+                    <p>
+                        <strong>Notes:</strong>
+                        {{ item[3] }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No progress recorded yet.</p>
+
+        {% endif %}
+
+
+        <h2>💬 Feedback History</h2>
+
+        {% if feedback_data %}
+
+            {% for item in feedback_data %}
+
+                <div class="feedback-card">
+
+                    <p>
+                        <strong>Name:</strong>
+                        {{ item[0] }}
+                    </p>
+
+                    <p>
+                        <strong>Feedback:</strong>
+                        {{ item[1] }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No feedback submitted yet.</p>
+
+        {% endif %}
+
+
+        <a class="back" href="/">
+            ← Back to FitBuddy
+        </a>
+
+    </div>
+
+</body>
+</html>

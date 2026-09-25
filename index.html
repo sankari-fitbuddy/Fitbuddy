@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FitBuddy - AI Fitness Planner</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f7f4;
+            margin: 0;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #2e7d32;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #256428;
+        }
+
+        .progress-button {
+            display: block;
+            width: fit-content;
+            margin: 20px auto 0;
+            padding: 12px 20px;
+            background: #2e7d32;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+        }
+
+        .progress-button:hover {
+            background: #256428;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🤖 FitBuddy</h1>
+
+    <p class="subtitle">
+        AI-Powered Fitness & Healthy Nutrition Planner
+    </p>
+
+    <form action="/generate" method="post" onsubmit="showLoading()">
+
+        <label>Your Name:</label>
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+            required
+        >
+
+
+        <label>Your Goal:</label>
+
+        <select name="goal" required>
+
+            <option value="">
+                Select your goal
+            </option>
+
+            <option value="General Fitness">
+                General Fitness
+            </option>
+
+            <option value="Healthy Fitness">
+                Healthy Fitness
+            </option>
+
+            <option value="Strength">
+                Strength
+            </option>
+
+            <option value="Flexibility">
+                Flexibility
+            </option>
+
+        </select>
+
+
+        <label>Experience Level:</label>
+
+        <select name="experience" required>
+
+            <option value="">
+                Select experience
+            </option>
+
+            <option value="Beginner">
+                Beginner
+            </option>
+
+            <option value="Intermediate">
+                Intermediate
+            </option>
+
+            <option value="Advanced">
+                Advanced
+            </option>
+
+        </select>
+
+
+        <label>Days per Week:</label>
+
+        <select name="days" required>
+
+            <option value="">
+                Select days
+            </option>
+
+            <option value="1">
+                1 day
+            </option>
+
+            <option value="2">
+                2 days
+            </option>
+
+            <option value="3">
+                3 days
+            </option>
+
+            <option value="4">
+                4 days
+            </option>
+
+            <option value="5">
+                5 days
+            </option>
+
+            <option value="6">
+                6 days
+            </option>
+
+            <option value="7">
+                7 days
+            </option>
+
+        </select>
+
+
+        <label>Previous Feedback:</label>
+
+        <textarea
+            name="feedback"
+            placeholder="Optional: Enter previous feedback"
+        ></textarea>
+
+
+        <button type="submit">
+            Generate Fitness Plan 🚀
+        </button>
+
+    </form>
+
+
+    <a
+        href="/progress"
+        class="progress-button"
+    >
+        📈 Track My Progress
+    </a>
+
+</div>
+
+
+<script>
+
+function showLoading() {
+
+    const button = document.querySelector("button");
+
+    button.innerText = "Generating your plan... ⏳";
+
+    button.disabled = true;
+}
+
+</script>
+
+</body>
+
+</html>
