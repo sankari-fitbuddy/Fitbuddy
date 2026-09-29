@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitBuddy - AI Fitness Planner</title>
+<style>
+*{box-sizing:border-box} body{font-family:Arial,sans-serif;background:#111;color:#fff;margin:0;padding:30px}
+.container{max-width:700px;margin:auto;background:#222;padding:30px;border-radius:18px}
+h1{text-align:center}.subtitle{text-align:center;color:#bbb;margin-bottom:25px}
+label{display:block;margin-top:15px;margin-bottom:7px;font-weight:bold}
+input,select{width:100%;padding:12px;border:0;border-radius:8px;font-size:15px}
+button{width:100%;padding:13px;margin-top:20px;border:0;border-radius:8px;background:#2e7d32;color:#fff;font-weight:bold;cursor:pointer}
+.links{display:flex;gap:10px;margin-top:15px}.links a{flex:1;text-align:center;padding:12px;background:#333;color:#fff;text-decoration:none;border-radius:8px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>FitBuddy 🏋️</h1>
+<div class="subtitle">AI Fitness Plan Generator</div>
+<form method="post" action="/generate-workout">
+<label>Username</label>
+<input type="text" name="username" placeholder="Enter your name" required>
+
+<label>User ID</label>
+<input type="text" name="user_id" placeholder="Example: U001" required>
+
+<label>Age</label>
+<input type="number" name="age" min="1" required>
+
+<label>Weight (kg)</label>
+<input type="number" name="weight" step="0.1" min="1" required>
+
+<label>Fitness Goal</label>
+<input type="text" name="goal" placeholder="Example: General Fitness" required>
+
+<label>Intensity</label>
+<select name="intensity" required>
+<option value="Low">Low</option>
+<option value="Moderate" selected>Moderate</option>
+<option value="High">High</option>
+</select>
+
+<button type="submit">Generate Workout Plan 💪</button>
+</form>
+
+<div class="links">
+<a href="/progress">📈 Progress</a>
+<a href="/admin">⚙️ Admin</a>
+</div>
+</div>
+</body>
+</html>

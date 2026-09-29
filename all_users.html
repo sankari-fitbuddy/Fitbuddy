@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FitBuddy - Admin Panel</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #111;
+            color: white;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 30px;
+        }
+
+        .card {
+            background: #222;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* =========================
+           TABLE CONTAINER
+        ========================= */
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 8px;
+        }
+
+        /* =========================
+           MAIN TABLE
+        ========================= */
+
+        table {
+            width: 100%;
+            min-width: 1800px;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #444;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        /* =========================
+           TABLE HEADER
+        ========================= */
+
+        th {
+            background: #1565c0;
+            color: white;
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        /* =========================
+           TABLE ROW
+        ========================= */
+
+        tbody tr:nth-child(even) {
+            background: #292929;
+        }
+
+        tbody tr:hover {
+            background: #333;
+        }
+
+        /* =========================
+           COLUMN WIDTH
+        ========================= */
+
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 80px;
+        }
+
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 140px;
+        }
+
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 70px;
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 100px;
+        }
+
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 150px;
+        }
+
+        th:nth-child(6),
+        td:nth-child(6) {
+            width: 110px;
+        }
+
+        th:nth-child(7),
+        td:nth-child(7) {
+            width: 550px;
+        }
+
+        th:nth-child(8),
+        td:nth-child(8) {
+            width: 550px;
+        }
+
+        th:nth-child(9),
+        td:nth-child(9) {
+            width: 100px;
+        }
+
+        /* =========================
+           PLAN CELL
+        ========================= */
+
+        .plan-cell {
+            background: #242424;
+            max-height: 450px;
+        }
+
+        .plan-text {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+
+            line-height: 1.5;
+
+            color: #ddd;
+
+            font-size: 13px;
+
+            max-height: 400px;
+
+            overflow-y: auto;
+
+            padding: 5px;
+        }
+
+        /* =========================
+           ORIGINAL PLAN
+        ========================= */
+
+        .original-plan {
+            border-left: 4px solid #2196f3;
+            padding-left: 10px;
+        }
+
+        /* =========================
+           UPDATED PLAN
+        ========================= */
+
+        .updated-plan {
+            border-left: 4px solid #4caf50;
+            padding-left: 10px;
+
+            color: #d7ffd9;
+        }
+
+        /* =========================
+           NO PLAN
+        ========================= */
+
+        .no-plan {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* =========================
+           BACKUP MESSAGE
+        ========================= */
+
+        .backup-message {
+            color: #ffcc80;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           DELETE BUTTON
+        ========================= */
+
+        .delete-btn {
+            background: #c62828;
+            color: white;
+
+            border: none;
+
+            padding: 8px 14px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .delete-btn:hover {
+            background: #b71c1c;
+            transform: scale(1.03);
+        }
+
+        /* =========================
+           USER INFO
+        ========================= */
+
+        .user-id {
+            font-weight: bold;
+            color: #90caf9;
+        }
+
+        .goal {
+            color: #ffcc80;
+        }
+
+        .intensity {
+            color: #81c784;
+            font-weight: bold;
+        }
+
+        /* =========================
+           SCROLLBAR
+        ========================= */
+
+        .plan-text::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .plan-text::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .plan-text::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 5px;
+        }
+
+        .plan-text::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            h2 {
+                font-size: 21px;
+            }
+
+            th,
+            td {
+                padding: 8px;
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =========================
+         PAGE TITLE
+    ========================= -->
+
+    <h1>
+        ⚙️ FitBuddy - Admin Panel
+    </h1>
+
+
+    <!-- =========================
+         USERS + WORKOUT PLANS
+    ========================= -->
+
+    <div class="card">
+
+        <h2>
+            👥 FitBuddy - All Users & Workout Plans
+        </h2>
+
+
+        <div class="table-container">
+
+
+            <table>
+
+
+                <!-- =========================
+                     TABLE HEADER
+                ========================= -->
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            User ID
+                        </th>
+
+                        <th>
+                            Name
+                        </th>
+
+                        <th>
+                            Age
+                        </th>
+
+                        <th>
+                            Weight (kg)
+                        </th>
+
+                        <th>
+                            Goal
+                        </th>
+
+                        <th>
+                            Intensity
+                        </th>
+
+                        <th>
+                            Original Workout Plan
+                        </th>
+
+                        <th>
+                            Updated Workout Plan
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <!-- =========================
+                     TABLE BODY
+                ========================= -->
+
+                <tbody>
+
+
+                    {% for user in users %}
+
+
+                    {% set user_plans = [] %}
+
+
+                    {% for plan in plans %}
+
+                        {% if plan[1]|string == user[0]|string %}
+
+                            {% set _ = user_plans.append(plan) %}
+
+                        {% endif %}
+
+                    {% endfor %}
+
+
+                    <tr>
+
+
+                        <!-- =========================
+                             USER ID
+                        ========================= -->
+
+                        <td>
+
+                            <span class="user-id">
+                                {{ user[0] }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- =========================
+                             NAME
+                        ========================= -->
+
+                        <td>
+                            {{ user[1] }}
+                        </td>
+
+
+                        <!-- =========================
+                             AGE
+                        ========================= -->
+
+                        <td>
+                            {{ user[2] }}
+                        </td>
+
+
+                        <!-- =========================
+                             WEIGHT
+                        ========================= -->
+
+                        <td>
+                            {{ user[3] }}
+                        </td>
+
+
+                        <!-- =========================
+                             GOAL
+                        ========================= -->
+
+                        <td>
+
+                            <span class="goal">
+                                {{ user[4] }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- =========================
+                             INTENSITY
+                        ========================= -->
+
+                        <td>
+
+                            <span class="intensity">
+                                {{ user[5] }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- =========================
+                             ORIGINAL WORKOUT PLAN
+                        ========================= -->
+
+                        <td class="plan-cell">
+
+
+                            {% if user_plans %}
+
+
+                                <div class="plan-text original-plan">
+
+
+                                    {% if "Gemini API key is not configured" in user_plans[0][2] %}
+
+                                        <span class="backup-message">
+
+                                            Original AI workout plan was unavailable.
+
+                                            <br><br>
+
+                                            A backup workout plan is being used.
+
+                                        </span>
+
+
+                                    {% elif "Gemini Error:" in user_plans[0][2] %}
+
+                                        <span class="backup-message">
+
+                                            AI workout generation was temporarily unavailable.
+
+                                            <br><br>
+
+                                            A backup workout plan is being used.
+
+                                        </span>
+
+
+                                    {% elif "temporarily experiencing high demand" in user_plans[0][2] %}
+
+                                        <span class="backup-message">
+
+                                            AI service was temporarily busy.
+
+                                            <br><br>
+
+                                            A backup workout plan is being used.
+
+                                        </span>
+
+
+                                    {% else %}
+
+                                        {{ user_plans[0][2] }}
+
+                                    {% endif %}
+
+
+                                </div>
+
+
+                            {% else %}
+
+
+                                <span class="no-plan">
+                                    No workout plan available
+                                </span>
+
+
+                            {% endif %}
+
+
+                        </td>
+
+
+                        <!-- =========================
+                             UPDATED WORKOUT PLAN
+                        ========================= -->
+
+                        <td class="plan-cell">
+
+
+                            {% if user_plans %}
+
+
+                                {% set latest_plan = user_plans[-1] %}
+
+
+                                {% if latest_plan[3] %}
+
+
+                                    <div class="plan-text updated-plan">
+
+                                        {{ latest_plan[3] }}
+
+                                    </div>
+
+
+                                {% else %}
+
+
+                                    <span class="no-plan">
+                                        Not updated yet
+                                    </span>
+
+
+                                {% endif %}
+
+
+                            {% else %}
+
+
+                                <span class="no-plan">
+                                    No workout plan available
+                                </span>
+
+
+                            {% endif %}
+
+
+                        </td>
+
+
+                        <!-- =========================
+                             DELETE USER
+                        ========================= -->
+
+                        <td>
+
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteUser('{{ user[0] }}')"
+                            >
+
+                                Delete
+
+                            </button>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+async function deleteUser(userId) {
+
+
+    const confirmation = confirm(
+        "Are you sure you want to delete this user?"
+    );
+
+
+    if (!confirmation) {
+
+        return;
+
+    }
+
+
+    try {
+
+
+        const response = await fetch(
+            `/delete-user/${userId}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+
+        if (response.ok) {
+
+
+            alert(
+                "User deleted successfully!"
+            );
+
+
+            location.reload();
+
+
+        } else {
+
+
+            alert(
+                "Failed to delete user."
+            );
+
+
+        }
+
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "Delete error:",
+            error
+        );
+
+
+        alert(
+            "Something went wrong."
+        );
+
+
+    }
+
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
